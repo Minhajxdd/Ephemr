@@ -2,14 +2,17 @@ package config
 
 import (
 	"os"
+	"strings"
 )
 
 type Config struct {
-	Port         string
-	JwtSecret    string
-	HostName     string
-	GmailId      string
-	GmailAppPass string
+	Port            string
+	JwtSecret       string
+	HostName        string
+	GmailId         string
+	GmailAppPass    string
+	Allowed_Origins []string
+
 	Database
 }
 
@@ -25,11 +28,12 @@ var Cfg *Config
 
 func Init() {
 	Cfg = &Config{
-		Port:         os.Getenv("PORT"),
-		JwtSecret:    os.Getenv("JWT_SECRET"),
-		GmailId:      os.Getenv("GMAIL_ID"),
-		GmailAppPass: os.Getenv("GMAIL_APP_PASS"),
-		HostName:     os.Getenv("HOST_NAME"),
+		Port:            os.Getenv("PORT"),
+		JwtSecret:       os.Getenv("JWT_SECRET"),
+		GmailId:         os.Getenv("GMAIL_ID"),
+		GmailAppPass:    os.Getenv("GMAIL_APP_PASS"),
+		HostName:        os.Getenv("HOST_NAME"),
+		Allowed_Origins: strings.Split(os.Getenv("ALLOWED_ORIGINS"), ","),
 		Database: Database{
 			DB_USER:     os.Getenv("DB_USER"),
 			DB_PWD:      os.Getenv("DB_PWD"),
